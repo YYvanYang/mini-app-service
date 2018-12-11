@@ -2,7 +2,8 @@ const Koa = require('koa');
 const app = new Koa();
 const compose = require('koa-compose');
 const logger = require('koa-logger');
-const render = require('./lib/render');
+const bodyParser = require('koa-bodyparser')
+// const render = require('./lib/render');
 
 const path = require('path');
 const serve = require('koa-static');
@@ -14,23 +15,30 @@ app.use(publicFiles);
 
 app.use(logger());
 
-app.use(render);
+// 解析请求体
+app.use(bodyParser())
+
+// 引入路由分发
+const router = require('./routes')
+app.use(router.routes())
+
+// app.use(render);
 
 // x-response-time
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  ctx.set('X-Response-Time', `${ms}ms`);
-});
+// app.use(async (ctx, next) => {
+//   const start = Date.now();
+//   await next();
+//   const ms = Date.now() - start;
+//   ctx.set('X-Response-Time', `${ms}ms`);
+// });
 
 // logger
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
-});
+// app.use(async (ctx, next) => {
+//   const start = Date.now();
+//   await next();
+//   const ms = Date.now() - start;
+//   console.log(`${ctx.method} ${ctx.url} - ${ms}`);
+// });
 
 // response
 

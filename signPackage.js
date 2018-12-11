@@ -72,7 +72,32 @@ async function getJsApiTicket () {
     return { ..._sign, appId: process.env.APPID }
  }
 
+ //  获取小程序码
+async function getACode() {
+  const token = await getAccessToken();
+
+  // http://blog.csdn.net/u014477038/article/details/70056171
+  let postData = {
+    scene: 'TODO',
+    width: 430,
+    auto_color: false,
+    line_color: { r: '0', g: '0', b: '0' }
+  }
+
+  let options = {
+    method: 'POST',
+    uri: 'https://api.weixin.qq.com/wxa/getwxacodeunlimit',
+    qs: {
+      access_token: token
+    },
+    body: JSON.stringify(postData) // important!!!
+  };
+
+  return request(options);
+}
+
 module.exports = {
   getAccessToken,
-  getSignPackage
+  getSignPackage,
+  getACode
 }
