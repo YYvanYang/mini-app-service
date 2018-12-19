@@ -56,7 +56,8 @@ async function home(ctx, next) {
     url = url.replace(/^http:/i, 'https:');
 
     const signPackage = await getSignPackage(url);
-    await ctx.render('index', { signPackage });
+    // await ctx.render('index', { signPackage });
+    ctx.body = signPackage;
   } else {
     await next();
   }
