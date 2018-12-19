@@ -1,7 +1,7 @@
 version: "2"
 services:
   node:
-    image: "node:8"
+    image: node:10.14.2
     container_name: ${NODE_SERVER_CONTAINER_NAME}
     user: "node"
     working_dir: /home/node/app
@@ -9,7 +9,7 @@ services:
       - NODE_ENV=production
       - VIRTUAL_HOST=${DOMAINS}
       - LETSENCRYPT_HOST=${DOMAINS}
-      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL} 
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     restart: always
     ### IMPORTANT
     # Expose ports without publishing them to the host machine - they’ll only be accessible to linked services. Only the internal port can be specified.
