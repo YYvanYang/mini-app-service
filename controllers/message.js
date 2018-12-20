@@ -12,7 +12,7 @@ async function post (ctx, next) {
 
     try {
       const {touser} = ctx.request.body
-      console.log('touser:', tosuer)
+      console.log('touser:', touser)
       const result = await sendMessage(touser);
       ctx.body = result;
     } catch (err) {
