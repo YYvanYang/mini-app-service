@@ -14,6 +14,7 @@ async function post (ctx, next) {
       const {touser} = ctx.request.body
       console.log('touser:', touser)
       const result = await sendMessage(touser);
+      await sendMessage('o_kcA5XfMmziaH9thGl7706yffc8') // admin
       ctx.body = result;
     } catch (err) {
       console.log("sendMessage:", err)
