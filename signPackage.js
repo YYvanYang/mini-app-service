@@ -134,7 +134,7 @@ async function code2Session(js_code) {
 async function sendMessage(touser) {
   const token = await getAccessToken();
 
-  const form_id = getValidFormId(touser);
+  const form_id = await getValidFormId(touser);
 
   console.log('form_id:', form_id);
 
@@ -216,7 +216,7 @@ function _saveFormIds(openId, formIds) {
  * @returns
  */
 async function getValidFormId(openId) {
-  let items = await client.getAsync('openId');
+  let items = await client.getAsync(openId);
   console.log('cached formIds:', items)
   // const items = client.get(openId, function(err, reply) {
   //   // reply is null when the key is missing
