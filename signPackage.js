@@ -116,7 +116,7 @@ async function code2Session(js_code) {
       js_code,
       appid: appid,
       secret: appSecret,
-      grant_type: 'authorization_code',
+      grant_type: 'authorization_code'
     },
     headers: {
       'User-Agent': 'Request-Promise'
@@ -129,9 +129,105 @@ async function code2Session(js_code) {
   return result;
 }
 
+// sendTemplateMessage
+// POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=ACCESS_TOKEN
+async function sendMessage(touser) {
+  const token = await getAccessToken();
+
+  const form_id = getValidFormId(touser)
+
+  // http://blog.csdn.net/u014477038/article/details/70056171
+  let postData = {
+    touser, // 接收者（用户）的 openid
+    template_id: "HJ3Ci4gj_gXiNrqiVFUpvvEjEVomu8bQhRdtL68O8P8", // 所需下发的模板消息的id
+    form_id,
+    data: {
+      keyword1: {
+        value: '培训课程1'
+      },
+      keyword2: {
+        value: '12345678911'
+      },
+      keyword3: {
+        value: '2018年12月20日'
+      },
+      keyword4: {
+        value: '张三11'
+      }
+    }
+  };
+
+  let options = {
+    method: 'POST',
+    uri: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send',
+    qs: {
+      access_token: token
+    },
+    body: JSON.stringify(postData), // important!!!
+    json: true
+  };
+
+  let result = await rp(options);
+
+  return result;
+
+  // rp(options).then(parsedBody => {
+  //   // POST successed...
+  // })
+  // .catch(err=> {
+  //   // POST failed...
+  // })
+}
+
+function saveFormIds(openId, formIdsWithExpire) {
+  _saveFormIds(openId, formIdsWithExpire);
+}
+
 module.exports = {
   getAccessToken,
   getSignPackage,
   getACode,
-  code2Session
+  code2Session,
+  saveFormIds,
+  sendMessage
 };
+
+/**
+ *
+ *
+ * @param {*} openId
+ * @param {*} formIdsWithExpire: [{formId, expire}]
+ */
+function _saveFormIds(openId, formIdsWithExpire) {
+  client.set(
+    openId,
+    JSON.stringify(formIdsWithExpire),
+    'EX',
+    60 * 60 * 24 * 7 - 60 * 60
+  );
+}
+
+/**
+ *
+ *
+ * @param {*} openId
+ * @returns
+ */
+function getValidFormId(openId) {
+  const items = client.get(openId);
+  if (items) {
+    const formIdsWithExpire = JSON.parse(items);
+
+    while (formIdsWithExpire.length) {
+      const item = formIdsWithExpire.shift();
+      if (item.expire > Date.now()) {
+        // update formIds
+        _saveFormIds(openId, formIdsWithExpire);
+        return item.formId;
+      }
+    }
+
+    // no valid formIds, clear formIds
+    client.del(openId);
+  }
+}

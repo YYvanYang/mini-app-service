@@ -1,4 +1,4 @@
-let { sendMessage } = require('../signPackage');
+let { saveFormIds } = require('../signPackage');
 
 /**
  * 响应 GET 请求
@@ -11,8 +11,10 @@ async function get (ctx, next) {
 async function post (ctx, next) {
 
     try {
-      const touser = ctx.query.touser;
-      const result = await sendMessage(touser);
+
+      const {openId, formIdsWithExpire} = ctx.request.body
+      console.log("openId, formIdsWithExpire:",openId, formIdsWithExpire)
+      const result = await saveFormIds(openId, formIdsWithExpire);
       ctx.body = result;
     } catch (err) {
       console.log("sendMessage:", err)

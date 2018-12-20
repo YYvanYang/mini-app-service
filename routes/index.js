@@ -16,7 +16,8 @@ router.get('/login', controllers.login)
 // // 用户信息接口（可以用来验证登录态）
 // router.get('/user', validationMiddleware, controllers.user)
 
-
+// POST
+router.post('/collect', controllers.collect.post)
 
 // --- 客服消息接口 Demo --- //
 // GET  用来响应小程序后台配置时发送的验证请求
