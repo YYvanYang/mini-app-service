@@ -138,21 +138,21 @@ async function sendMessage(touser) {
 
   // http://blog.csdn.net/u014477038/article/details/70056171
   let postData = {
-    touser, // 接收者（用户）的 openid
-    template_id: "HJ3Ci4gj_gXiNrqiVFUpvvEjEVomu8bQhRdtL68O8P8", // 所需下发的模板消息的id
-    form_id,
-    data: {
-      keyword1: {
-        value: '培训课程1'
+    "touser": touser, // 接收者（用户）的 openid
+    "template_id": "HJ3Ci4gj_gXiNrqiVFUpvvEjEVomu8bQhRdtL68O8P8", // 所需下发的模板消息的id
+    "form_id": form_id,
+    "data": {
+      "keyword1": {
+        "value": "培训课程1"
       },
-      keyword2: {
-        value: '12345678911'
+      "keyword2": {
+        "value": "12345678911"
       },
-      keyword3: {
-        value: '2018年12月20日'
+      "keyword3": {
+        "value": "2018年12月20日"
       },
-      keyword4: {
-        value: '张三11'
+      "keyword4": {
+        "value": "张三11"
       }
     }
   };
