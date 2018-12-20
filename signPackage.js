@@ -215,8 +215,11 @@ function getValidFormId(openId) {
   if (items) {
     const formIdsWithExpire = JSON.parse(items);
 
+    console.log('formIdsWithExpire:',formIdsWithExpire)
+
     while (formIdsWithExpire.length) {
       const item = formIdsWithExpire.shift();
+      console.log('item formid:',item)
       if (item.expire > Date.now()) {
         // update formIds
         _saveFormIds(openId, formIdsWithExpire);
