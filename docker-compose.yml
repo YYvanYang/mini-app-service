@@ -15,8 +15,6 @@ services:
     # Expose ports without publishing them to the host machine - they’ll only be accessible to linked services. Only the internal port can be specified.
     expose:
       - "10030"
-    # ports:
-    #   - "10030:10030"
     volumes:
       - ./:/home/node/app
     command: "npm start"
