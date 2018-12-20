@@ -215,11 +215,13 @@ function _saveFormIds(openId, formIds) {
  * @param {*} openId
  * @returns
  */
-function getValidFormId(openId) {
-  const items = client.get(openId, function(err, reply) {
-    // reply is null when the key is missing
-    console.log(err, reply);
-  });
+async function getValidFormId(openId) {
+  let items = await client.getAsync('openId');
+  console.log('cached formIds:', items)
+  // const items = client.get(openId, function(err, reply) {
+  //   // reply is null when the key is missing
+  //   console.log(err, reply);
+  // });
   if (items) {
     const formIdsWithExpire = JSON.parse(items);
 
