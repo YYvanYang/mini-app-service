@@ -202,7 +202,9 @@ module.exports = {
  */
 function _saveFormIds(openId, formIds) {
   console.log('saving formIds:', formIds)
-  client.set(openId, JSON.stringify(formIds), 'EX', 60 * 60 * 24 * 7 - 60 * 60);
+  const ids = JSON.stringify(formIds)
+  console.log('saving formIds JSON:', ids)
+  client.set(openId, ids, 'EX', 60 * 60 * 24 * 7 - 60 * 60);
 }
 
 /**
