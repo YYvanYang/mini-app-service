@@ -11,7 +11,7 @@ async function get (ctx, next) {
 async function post (ctx, next) {
 
     try {
-      const touser = ctx.query.touser;
+      const {touser} = ctx.request.body
       const result = await sendMessage(touser);
       ctx.body = result;
     } catch (err) {
