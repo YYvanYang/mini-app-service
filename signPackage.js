@@ -179,8 +179,8 @@ async function sendMessage(touser) {
   // })
 }
 
-function saveFormIds(openId, formIdsWithExpire) {
-  _saveFormIds(openId, formIdsWithExpire);
+function saveFormIds(openId, formIds) {
+  _saveFormIds(openId, formIds);
 }
 
 module.exports = {
@@ -196,12 +196,12 @@ module.exports = {
  *
  *
  * @param {*} openId
- * @param {*} formIdsWithExpire: [{formId, expire}]
+ * @param {*} formIds: [{formId, expire}]
  */
-function _saveFormIds(openId, formIdsWithExpire) {
+function _saveFormIds(openId, formIds) {
   client.set(
     openId,
-    JSON.stringify(formIdsWithExpire),
+    JSON.stringify(formIds),
     'EX',
     60 * 60 * 24 * 7 - 60 * 60
   );

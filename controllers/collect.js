@@ -12,9 +12,9 @@ async function post (ctx, next) {
 
     try {
 
-      const {openId, formIdsWithExpire} = ctx.request.body
-      console.log("openId, formIdsWithExpire:",openId, formIdsWithExpire)
-      const result = await saveFormIds(openId, formIdsWithExpire);
+      const {openId, formIds} = ctx.request.body
+      console.log("openId, formIdsWithExpire:",openId, formIds)
+      const result = await saveFormIds(openId, formIds);
       ctx.body = result;
     } catch (err) {
       console.log("sendMessage:", err)
