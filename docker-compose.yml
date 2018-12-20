@@ -7,16 +7,16 @@ services:
     working_dir: /home/node/app
     environment:
       - NODE_ENV=production
-      # - VIRTUAL_HOST=${DOMAINS}
-      # - LETSENCRYPT_HOST=${DOMAINS}
-      # - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - VIRTUAL_HOST=${DOMAINS}
+      - LETSENCRYPT_HOST=${DOMAINS}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
     restart: unless-stopped
     ### IMPORTANT
     # Expose ports without publishing them to the host machine - they’ll only be accessible to linked services. Only the internal port can be specified.
     expose:
       - "10030"
-    ports:
-      - "10030:10030"
+    # ports:
+    #   - "10030:10030"
     volumes:
       - ./:/home/node/app
     command: "npm start"
