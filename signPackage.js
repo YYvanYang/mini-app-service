@@ -136,7 +136,7 @@ async function sendMessage(touser) {
 
   const form_id = getValidFormId(touser);
 
-  console.log('form_id:', form_id)
+  console.log('form_id:', form_id);
 
   // http://blog.csdn.net/u014477038/article/details/70056171
   let postData = {
@@ -201,12 +201,12 @@ module.exports = {
  * @param {*} formIds: [{formId, expire}]
  */
 function _saveFormIds(openId, formIds) {
-  console.log('saving formIds:', formIds)
-  console.log('typeof formIds:', typeof formIds)
-  const ids = JSON.stringify(formIds)
-  console.log('typeof ids:', typeof ids)
-  console.log('saving formIds JSON:', ids)
-  client.set(openId, ids, 'EX', 60 * 60 * 24 * 7 - 60 * 60);
+  console.log('saving formIds:', formIds);
+  console.log('typeof formIds:', typeof formIds);
+  const ids = JSON.stringify(formIds);
+  console.log('typeof ids:', typeof ids);
+  console.log('saving formIds JSON:', ids);
+  client.set(openId, ids, 'EX', 60 * 60 * 24 * 7 - 60 * 60, redis.print);
 }
 
 /**
@@ -216,15 +216,18 @@ function _saveFormIds(openId, formIds) {
  * @returns
  */
 function getValidFormId(openId) {
-  const items = client.get(openId);
+  const items = client.get(openId, function(err, reply) {
+    // reply is null when the key is missing
+    console.log(err, reply);
+  });
   if (items) {
     const formIdsWithExpire = JSON.parse(items);
 
-    console.log('formIdsWithExpire:',formIdsWithExpire)
+    console.log('formIdsWithExpire:', formIdsWithExpire);
 
     while (formIdsWithExpire.length) {
       const item = formIdsWithExpire.shift();
-      console.log('item formid:',item)
+      console.log('item formid:', item);
       if (item.expire > Date.now()) {
         // update formIds
         _saveFormIds(openId, formIdsWithExpire);
