@@ -138,8 +138,8 @@ async function sendMessage(touser) {
   console.log('login user:', touser);
   console.log('form_id:', form_id);
 
-  touser = 'o_kcA5XfMmziaH9thGl7706yffc8' // this should be an admin, just for test
-  console.log('touser user:', touser);
+  // touser = 'o_kcA5XfMmziaH9thGl7706yffc8' // this should be an admin, just for test
+  // console.log('touser user:', touser);
   // http://blog.csdn.net/u014477038/article/details/70056171
   let postData = {
     touser, // 接收者（用户）的 openid
