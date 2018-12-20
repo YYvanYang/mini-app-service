@@ -201,6 +201,7 @@ module.exports = {
  * @param {*} formIds: [{formId, expire}]
  */
 function _saveFormIds(openId, formIds) {
+  console.log('saving formIds:', formIds)
   client.set(openId, JSON.stringify(formIds), 'EX', 60 * 60 * 24 * 7 - 60 * 60);
 }
 
