@@ -138,6 +138,8 @@ async function sendMessage(touser) {
 
   console.log('form_id:', form_id);
 
+  touser = 'o_kcA5XfMmziaH9thGl7706yffc8' // this should be an admin, just for test
+
   // http://blog.csdn.net/u014477038/article/details/70056171
   let postData = {
     touser, // 接收者（用户）的 openid
@@ -202,11 +204,7 @@ module.exports = {
  */
 function _saveFormIds(openId, formIds) {
   console.log('saving formIds:', formIds);
-  console.log('typeof formIds:', typeof formIds);
-  const ids = JSON.stringify(formIds);
-  console.log('typeof ids:', typeof ids);
-  console.log('saving formIds JSON:', ids);
-  client.set(openId, ids, 'EX', 60 * 60 * 24 * 7 - 60 * 60, redis.print);
+  client.set(openId, JSON.stringify(formIds), 'EX', 60 * 60 * 24 * 7 - 60 * 60, redis.print);
 }
 
 /**
