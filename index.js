@@ -3,6 +3,7 @@ const app = new Koa();
 const compose = require('koa-compose');
 const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser')
+const cors = require('@koa/cors');
 // const render = require('./lib/render');
 
 const path = require('path');
@@ -12,7 +13,7 @@ const publicFiles = serve(path.join(__dirname, 'public'));
 publicFiles._name = 'static /public';
 
 app.use(publicFiles);
-
+app.use(cors());
 app.use(logger());
 
 // 解析请求体
