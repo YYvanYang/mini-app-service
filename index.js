@@ -4,7 +4,6 @@ const compose = require('koa-compose');
 const logger = require('koa-logger');
 const bodyParser = require('koa-bodyparser')
 const cors = require('@koa/cors');
-const json = require('koa-json')
 // const render = require('./lib/render');
 
 const path = require('path');
@@ -15,7 +14,6 @@ publicFiles._name = 'static /public';
 
 app.use(publicFiles);
 app.use(cors());
-app.use(json())
 app.use(logger());
 
 // 解析请求体
